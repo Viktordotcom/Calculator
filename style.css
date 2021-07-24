@@ -1,10 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Qahiri&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+:root{
+    padding: 0;
+    margin: 0;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+    background-color: #F8FCDA;
+
+
+}
+.buttons{
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+width: 320px;
+box-shadow: 0px 20px 20px 0 black;
+
+}
+.buttons :hover{
+    background-color: #E3E9C2;
+    transform: scale(1.05);
+
+}
+.display{
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+width: 320px;
+height: 200px;
+text-align: end;
+font-size: 43px;
+font-family: 'Alfa Slab One', cursive;
+border-radius: 5px; 
+word-wrap: break-word;
+box-shadow: 0px 20px 20px 0 black;
+border: 1px solid purple;
+}
 .digits{
     border: 1px solid black;
-    width: 100px;
-    height:  100px;
+    width: 25%;
+    height:  50px;
+    padding: 5px;
+    font-size: 20px;
+    background-color: #EFC88B;
+    font-family: 'Qahiri', sans-serif;
+    cursor: pointer;
+}
+#btn-equal{
+width: 50%;
+height: 50px;
+font-size: 40px;
+text-align: center;
+cursor: pointer;
+ background-image: linear-gradient(to right top, #141314, #302933, #4a4257, #625e7f, #757caa, #7389b7, #7095c2, #6da2cc, #679bb6, #6993a1, #6e898e, #747f7f);
+border: 2px solid black;
+}
+#btn-clear{
+    width: 50%;
+    height: 50px;
+    font-size: 30px;
+     background-image: linear-gradient(to right top, #141314, #302933, #4a4257, #625e7f, #757caa, #7389b7, #7095c2, #6da2cc, #679bb6, #6993a1, #6e898e, #747f7f);
+     border: 2px solid black;
+}
+#btn-zero{
+    width: 50%;
+}
+#btn-dot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(63,94,251);
+background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    text-align:center;
+    font-size: 35px;
+    cursor: pointer;
+
 }
 .operators{
-    width: 80px;
-    height: 100px;
-    background-color: cadetblue;
+    width: 25%;
+    height: 50px;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    font-size: 22px;
+    cursor: pointer;
+    border: 1px solid purple;
+}
+footer{
+    margin: 15px;
+}
+footer a{
+    text-decoration: none;
 }
