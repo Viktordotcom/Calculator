@@ -4,16 +4,15 @@ const btnClear = document.getElementById('btn-clear');
 const btnEqual = document.getElementById('btn-equal');
 const para = document.getElementById('display');
 
-//MAKE UNDO Function!
 let currentNum =[];
 let currentOperator =[];
 
 btnDigit.forEach(button =>{
-    button.addEventListener('click', displayFunction)
+    button.addEventListener('click', addInputOnDisplay)
 });
 
 btnOperator.forEach(button =>{
-    button.addEventListener('click', displayOperator)
+    button.addEventListener('click', add_SaveData)
 });
 
 btnClear.addEventListener('click', clearDisplayData);
@@ -95,60 +94,58 @@ function operate(){
       if(currentOperator == '+'){
         let filtering = /(?<=\+)[^\]]+/;
         currentNum.push(para.textContent.match(filtering).join(''));
-          console.log(currentNum[0])
+          
         sumNumbers(Number(currentNum[0]),Number(currentNum[1]));
      }
 
         else if((currentOperator[0] == '-') && (currentOperator[1] == '+')){
             let filtering = /(?<=\+)[^\]]+/;
-            currentNum.push(para.textContent.match(filtering).join(''));
-              console.log(currentNum[0])
+            currentNum.push(para.textContent.match(filtering).join(''));   
+
             sumNegativeNumbers(Number(currentNum[0]),Number(currentNum[1]));   
         }
         else if((currentOperator[0] == '-') && (currentOperator[1] == '-')){
             let filtering = /(?<=\d-)[^\]]+/;
             currentNum.push(para.textContent.match(filtering).join(''));
-              console.log(currentNum[0]);
-              console.log(currentNum[1]);
+
             subtractNegativeNumbers(Number(currentNum[0]),Number(currentNum[1]));   
         }
         else if((currentOperator[0] == '-') && (currentOperator[1] == '*')){
             let filtering = /(?<=\*)[^\]]+/;
             currentNum.push(para.textContent.match(filtering).join(''));
-              console.log(currentNum[0])
+              
             multiplyNegativeNumbers(Number(currentNum[0]),Number(currentNum[1]));   
         }
         else if((currentOperator[0] == '-') && (currentOperator[1] == '/')){
             let filtering = /(?<=\/)[^\]]+/;
             currentNum.push(para.textContent.match(filtering).join(''));
-              console.log(currentNum[0])
+              
             divideNegativeNumbers(Number(currentNum[0]),Number(currentNum[1]));   
         }
      else if(currentOperator == '-'){
         let filtering = /(?<=\-)[^\]]+/;
         currentNum.push(para.textContent.match(filtering).join(''));
+
         subtractNumbers(Number(currentNum[0]),Number(currentNum[1]));
      }
      else if(currentOperator == '*'){
         let filtering = /(?<=\*)[^\]]+/;
         currentNum.push(para.textContent.match(filtering).join(''));
+
         multiplyNumbers(Number(currentNum[0]),Number(currentNum[1]));
      }
      else if(currentOperator == '/'){
         let filtering = /(?<=\/)[^\]]+/;
         currentNum.push(para.textContent.match(filtering).join(''));
+
         divideNumbers(Number(currentNum[0]),Number(currentNum[1]));
      }
     
-
-
-console.log(currentNum)
-console.log(currentOperator)
 }
 
 // adds the pressed button's text content inside
 //+ the paragraph's textContent
-function displayFunction(){ 
+function addInputOnDisplay(){ 
     para.textContent += this.textContent;
 };
 
@@ -166,7 +163,7 @@ currentOperator = [];
 // then assigns the filtered paragraph's content in the currentNum variable
 // then filters the paragraph's content again looking for any of the 4 operators
 // assigns that filtered value to the currentOperator variable
-function displayOperator(){
+function add_SaveData(){
     if(currentOperator == '+' 
     || currentOperator == '-' 
     || currentOperator == '*' 
@@ -194,7 +191,7 @@ function displayOperator(){
 
 
 // keyboard input support functions
-function addNumberInput(){
+function addKeyboardNumber(){
     window.addEventListener('keydown', function(e){ 
             let filter = /[.\d]/g;
             let filteredNum = e.key.match(filter);
@@ -203,10 +200,10 @@ function addNumberInput(){
             }
     }); 
 };
- addNumberInput();
+ addKeyboardNumber();
 
- function addOperatorInput(){
-     let operatorInput = window.addEventListener('keydown', function(e){
+ function addKeyboardData(){
+      window.addEventListener('keydown', function(e){
         let filter = /[+,*,/,-]/g;
         let filteredOperator = e.key.match(filter);
         if (filteredOperator != null){
@@ -230,17 +227,12 @@ function addNumberInput(){
     currentNum.push(para.textContent.match(filtering).join(''));
     let filteringOperator =  /[+,*,/,-]/g;
     currentOperator = para.textContent.match(filteringOperator)
-            // let filter = /\d/g;
-            // currentNum.push(para.textContent.match(filter).join(''));
-            // currentOperator = filteredOperator;
-            // console.log(currentNum)
-            // console.log(currentOperator);
         }
      });
  }
- addOperatorInput();
+ addKeyboardData();
 
- function lookEqualInput(){
+ function onKeyboardEnterBtn(){
  window.addEventListener('keydown', function(e){
         if(e.key == 'Enter'){
             operate()
@@ -248,9 +240,9 @@ function addNumberInput(){
     }) 
 
  }
- lookEqualInput();
+ onKeyboardEnterBtn();
 
- function lookDeleteInput(){
+ function onKeyboardDeleteBtn(){
 window.addEventListener('keydown', function(e){
         if(e.key == 'Delete'){
             clearDisplayData()
@@ -258,7 +250,7 @@ window.addEventListener('keydown', function(e){
 
     })  
  }
- lookDeleteInput();
+ onKeyboardDeleteBtn();
 
  // Preventing '/' to act as search command (on Mozilla Firefox)
  function preventDivideDefault(){
