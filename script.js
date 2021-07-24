@@ -7,7 +7,6 @@ const para = document.getElementById('display');
 //MAKE UNDO Function!
 let currentNum =[];
 let currentOperator =[];
-let currNum = [];
 
 btnDigit.forEach(button =>{
     button.addEventListener('click', displayFunction)
@@ -20,103 +19,67 @@ btnOperator.forEach(button =>{
 btnClear.addEventListener('click', clearDisplayData);
 btnEqual.addEventListener('click', operate);
 
-// keyboard input support, has bug when using multiple inline operators
-// will rework the logic behind
-window.addEventListener('keydown', (e)=> {
-    para.textContent += e.key
-    if(e.key == '+'
-        ||e.key == '-'
-        ||e.key == '*'){
-            displayOperator2()
-    }
-    else if (e.key == 'Enter'){
-       let filter = para.textContent.replace(/Enter/, '');
-       para.textContent = filter
-       if(currentOperator == '+' 
-       || currentOperator == '-' 
-       || currentOperator == '*' 
-       || currentOperator == '/'){
-           operate()
-   
-       }
-       else if((currentOperator[0] == '-') && (currentOperator[1] == '+')
-       || (currentOperator[0] == '-') && (currentOperator[1] == '-')
-       || (currentOperator[0] == '-') && (currentOperator[1] == '*') 
-       || (currentOperator[0] == '-') && (currentOperator[1] == '/')){
-          operate() 
-   
-       }
-    }
-    else if (e.key == 'Delete'){
-        clearDisplayData()
-    }
-
-    else if (e.key == 'Backspace'){
-        // here goes undo Function
-        let filter = para.textContent.replace(/Backspace/, '');
-        para.textContent = filter
-        console.log(e)
-    }
-    else if(e.key == '0' || e.key == '1' || e.key == '2' || e.key == '3' || e.key == '4' || e.key == '5' || e.key == '6' || e.key == '7' || e.key == '8' || e.key == '9' || e.key =='.'){
-        ;
-    }
-    else if (e.key == '/'){
-        resetDivideDefault(e)
-    }
-    else {clearDisplayData() }
-    })
-    function resetDivideDefault(e){
-        e.preventDefault()
-        displayOperator2()
-
-    }
-
 // takes operate's argument values and
 // + returns the final value inside the para's content
 // clears the inside value of currentNum and currentOperator.
-
 function sumNumbers(num1, num2){
-     [(para.textContent= (num1)+(num2))];
+    let sum = ((num1)+(num2));
+     
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= sum.toFixed(2))];
 };
 function sumNegativeNumbers(num1, num2){
-    [(para.textContent= (-num1)+(num2))];
+    let sumNegative = ((-num1)+(num2));
+
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= sumNegative.toFixed(2))];
 };
 
 function subtractNumbers(num1, num2){
-    [(para.textContent= (num1)-(num2))];
+    let subtract = ((num1)-(num2));
+   
     currentNum =[];
     currentOperator = [];
+    return [(para.textContent= subtract.toFixed(2))];
 };
 function subtractNegativeNumbers(num1, num2){
-    [(para.textContent= (-num1)+(-num2))];
+    let subtractNegative = ((-num1)+(-num2));
+    
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= subtractNegative.toFixed(2))];
 };
 
 function multiplyNumbers(num1, num2){
-     [(para.textContent= (num1)*(num2))];
+    let multiply =((num1)*(num2));
+  
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= multiply.toFixed(2))];
 };
 function multiplyNegativeNumbers(num1, num2){
-    [(para.textContent= (-num1)*(num2))];
+    let multiplyNegative = ((-num1)*(num2));
+
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= multiplyNegative.toFixed(2))];
 };
 function divideNumbers(num1, num2){
-    [(para.textContent= (num1)/(num2))];
+    let divide = ((num1)/(num2));
+
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= divide.toFixed(2))];
 };
 
 function divideNegativeNumbers(num1, num2){
-    [(para.textContent= (-num1)/(num2))];
+    let divideNegative = ((-num1)/(num2));
+
      currentNum =[];
      currentOperator = [];
+     return [(para.textContent= divideNegative.toFixed(2))];
 };
 
 // trigers only on '=' button press 
@@ -227,15 +190,33 @@ function displayOperator(){
     console.log(currentNum)
     console.log(currentOperator)
 };
-function displayOperator2(){
-    if(currentOperator == '+' 
+
+
+
+// keyboard input support functions
+function addNumberInput(){
+    window.addEventListener('keydown', function(e){ 
+            let filter = /[.\d]/g;
+            let filteredNum = e.key.match(filter);
+            if (filteredNum != null){
+                para.textContent += filteredNum
+            }
+    }); 
+};
+ addNumberInput();
+
+ function addOperatorInput(){
+     let operatorInput = window.addEventListener('keydown', function(e){
+        let filter = /[+,*,/,-]/g;
+        let filteredOperator = e.key.match(filter);
+        if (filteredOperator != null){
+            console.log(e.key)
+            if(currentOperator == '+' 
     || currentOperator == '-' 
     || currentOperator == '*' 
     || currentOperator == '/'){
-        let filtering = /(?<=\+)[^\]]+/;
-        currentNum.push(para.textContent.match(filtering).join(''));
         operate()
-        
+
     }
     else if((currentOperator[0] == '-') && (currentOperator[1] == '+')
     || (currentOperator[0] == '-') && (currentOperator[1] == '-')
@@ -244,18 +225,48 @@ function displayOperator2(){
        operate() 
 
     }
-    
-     let filtering = /[.\d]/g;
-     currentNum.push(para.textContent.match(filtering).join(''));
-     let filteringOperator =  /[+,*,/,-]/g;
-     currentOperator = para.textContent.match(filteringOperator)
-     console.log(currentNum)
-     console.log(currentOperator)
-};
-// BUGS to be fixed:
-// when inputing multiple operators THROUGH the keyboard, the program bugs out because of the bad logic // need to change the logic behind my keyboard input
+    para.textContent +=filteredOperator
+    let filtering = /[.\d]/g;
+    currentNum.push(para.textContent.match(filtering).join(''));
+    let filteringOperator =  /[+,*,/,-]/g;
+    currentOperator = para.textContent.match(filteringOperator)
+            // let filter = /\d/g;
+            // currentNum.push(para.textContent.match(filter).join(''));
+            // currentOperator = filteredOperator;
+            // console.log(currentNum)
+            // console.log(currentOperator);
+        }
+     });
+ }
+ addOperatorInput();
 
-// EXTRA FEATURES to be added: 
-// add limit to display's input length (round the final result?)
-// Backspace undo Function
-// Keyboard input
+ function lookEqualInput(){
+ window.addEventListener('keydown', function(e){
+        if(e.key == 'Enter'){
+            operate()
+        }
+    }) 
+
+ }
+ lookEqualInput();
+
+ function lookDeleteInput(){
+window.addEventListener('keydown', function(e){
+        if(e.key == 'Delete'){
+            clearDisplayData()
+        }
+
+    })  
+ }
+ lookDeleteInput();
+
+ // Preventing '/' to act as search command (on Mozilla Firefox)
+ function preventDivideDefault(){
+    window.addEventListener('keydown', function(e){
+        if(e.key == '/'){
+            e.preventDefault()
+
+        }
+
+ });
+} preventDivideDefault();
